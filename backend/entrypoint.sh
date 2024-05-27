@@ -24,5 +24,7 @@ else
     fix_settings_file
 fi
 
-exec "$@"
+#exec "tail -f"
+#tail -f
+python manage.py runserver 0.0.0.0:8080
 

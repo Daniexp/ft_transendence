@@ -1,6 +1,9 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
+# Dependencies to debug
+RUN apt update && apt install vim -y
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -14,11 +17,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # Make port 8000 available to the world outside this container
-EXPOSE 8000
+#EXPOSE 8000
 
 # Define environment variable
 ENV NAME Transendence
 
 # Run the entrypoint script to set up the Django project if it doesn't exist
 ENTRYPOINT ["./entrypoint.sh"]
-

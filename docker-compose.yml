@@ -8,13 +8,15 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     volumes:
-      - ~./sgoinfre/postgres_data:/var/lib/postgresql/data
+      - /home/nkustoner/data/postgress:/var/lib/postgresql/data
     networks:
       - transendence-network
 
   web:
     build: ./backend
-    command: python manage.py runserver 0.0.0.0:8000
+      #command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8080:8080"
     volumes:
       - ./backend:/app
     environment:
@@ -24,16 +26,16 @@ services:
     depends_on:
       - db
 
-  frontend:
-    image: nginx:latest
-    volumes:
-      - ./frontend:/usr/share/nginx/html:ro
-    networks:
-      - transendence-network
-    ports:
-      - "8080:80"
-    depends_on:
-      - web
+#  frontend:
+#    image: nginx:latest
+#    volumes:
+#      - ./frontend:/usr/share/nginx/html:ro
+#    networks:
+#      - transendence-network
+#    ports:
+#      - "8080:80"
+#    depends_on:
+#      - web
 
 networks:
   transendence-network:
