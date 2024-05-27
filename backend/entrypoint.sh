@@ -25,6 +25,6 @@ else
 fi
 
 #exec "tail -f"
-#tail -f
-python manage.py runserver 0.0.0.0:8080
+tail -f
+#python manage.py runserver 0.0.0.0:8080
 

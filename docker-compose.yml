@@ -13,8 +13,11 @@ services:
       - transendence-network
 
   web:
-    build: ./backend
+    build:
+      context: ./backend/
+      dockerfile: Dockerfile
       #command: python manage.py runserver 0.0.0.0:8000
+    container_name: backend
     ports:
       - "8080:8080"
     volumes:
