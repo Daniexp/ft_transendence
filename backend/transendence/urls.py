@@ -21,4 +21,5 @@ from myapp import views
 urlpatterns = [
     #path('', admin.site.urls),
     path('', views.index),
+    path('api/data/', views.get_data),
 ]
