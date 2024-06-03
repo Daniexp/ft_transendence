@@ -5,7 +5,8 @@ import requests
 
 # Create your views here.
 
-authorize_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7f23e63d9f57af46395fc37255f56e7ad8e8c11b19428dc7518a02725743582e&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Flogin%2Fredirect&response_type=code"
+authorize_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-7f23e63d9f57af46395fc37255f56e7ad8e8c11b19428dc7518a02725743582e&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Flogin%2Fredirect&response_type=code&scope=public"
+state = "juajcuiwgciu7348vijbibrr"
 
 
 def intraLogin(request):
@@ -18,17 +19,19 @@ def printAuthRequest(request):
 
 def exchange_code(code):
     data = {
+        "grant_type":"client_credentials",
         "client_id": "u-s4t2ud-7f23e63d9f57af46395fc37255f56e7ad8e8c11b19428dc7518a02725743582e",
-        "client_secret": "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",
+        "client_secret": "", ## deleteado por securite, hay que hablar hasta que punto se podria liar y como evitarlo
         "code": code,
         "redirect_uri": "http://localhost:8080/oauth/login/redirect",
+        #"state": state,
     }
     headers = {
-        #'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/x-www-form-urlencoded',
     }
-   
-
-    response = requests.post("https://api.intra.42.fr/oauth/token", data=data)#, headers=headers)
+    
+    response = requests.post("https://api.intra.42.fr/oauth/token", data=data, headers=headers)
     print(response)
+    print(code)
     credentials = response.json()
+    print(credentials)
