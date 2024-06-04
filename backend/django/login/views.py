@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import JsonResponse
+#importar clase views donde se va a albergar la vista principal
+from app import views
 import requests
 
 # Create your views here.
@@ -14,14 +16,19 @@ def intraLogin(request):
 
 def printAuthRequest(request):
     code = request.GET.get('code')
-    exchange_code(code)
-    return JsonResponse(request.GET.dict())
+    response = exchange_code(code)
+    if (response == 200):
+        #return provisional a patata, el buen return es a la pagina principal
+        return views.index(request)
+    elif (response == 401):
+        #panel de access denied
+        return views.index(request)
 
 def exchange_code(code):
     data = {
         "grant_type":"client_credentials",
         "client_id": "u-s4t2ud-7f23e63d9f57af46395fc37255f56e7ad8e8c11b19428dc7518a02725743582e",
-        "client_secret": "", ## deleteado por securite, hay que hablar hasta que punto se podria liar y como evitarlo
+        "client_secret": "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", ## deleteado por securite, hay que hablar hasta que punto se podria liar y como evitarlo
         "code": code,
         "redirect_uri": "http://localhost:8080/oauth/login/redirect",
         #"state": state,
@@ -35,3 +42,4 @@ def exchange_code(code):
     print(code)
     credentials = response.json()
     print(credentials)
+    return response

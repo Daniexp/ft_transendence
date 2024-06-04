@@ -13,6 +13,6 @@ su postgres -c "psql < /psql.init"
 
 service postgresql stop
 
-rm -rf /psql.init
+#rm -rf /psql.init
 
 exec pg_ctlcluster 15 main start --foreground
